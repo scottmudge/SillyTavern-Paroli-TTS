@@ -1,4 +1,4 @@
-export function PCMPlayer(option) {
+function PCMPlayer(option) {
     this.init(option);
 }
 
@@ -129,3 +129,5 @@ PCMPlayer.prototype.flush = function() {
     this.startTime += audioBuffer.duration;
     this.samples = new Float32Array();
 };
+
+export default PCMPlayer; // Export as default

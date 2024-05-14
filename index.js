@@ -7,6 +7,7 @@
 
 import { extension_settings, getContext, loadExtensionSettings } from "../../extensions.js";
 import { saveSettingsDebounced } from "../../../script.js";
+import PCMPlayer from "./pcm-player.js"
 
 
 const extensionName = "sillytavern-paroli-tts";
@@ -22,6 +23,8 @@ var pcmplayer_opt = {
     flushingTime: 100
 }
 var player;
+var error_ts = 0;
+var cur_state = 0; // 0 == error/disconnect, 1 == good
 
 const defaultSettings = { 
     tts_enabled: true,
@@ -65,6 +68,14 @@ function getServerURL() {
     var addr = extension_settings[extensionName].server_address;
     if (!addr.endsWith("/")) addr += "/";
     addr += appendURL;
+    if (addr.includes('https:'))
+        addr = addr.replace('https', 'ws')
+    else if (addr.includes('http:'))
+        addr = addr.replace('http:', 'ws:')
+    if (addr.includes('ws:') && !addr.startsWith('ws://'))
+        addr = addr.replace('ws:', 'ws://')
+    if (!addr.startsWith('ws://'))
+        addr = 'ws://' + addr
     return addr;
 }
 
@@ -73,16 +84,21 @@ function setServerState(state) {
         $("#server_status_text").removeClass("paroli-tts-extension-text-error");
         $("#server_status_text").addClass("paroli-tts-extension-text-success");
         $("#server_status_text").text("Connected");
+        cur_state = 1;
     }
     else if (state == 'error') {
         $("#server_status_text").removeClass("paroli-tts-extension-text-success");
         $("#server_status_text").addClass("paroli-tts-extension-text-error");
         $("#server_status_text").text("Error");
+        error_ts = performance.now();
+        cur_state = 0;
     }
     else {
         $("#server_status_text").removeClass("paroli-tts-extension-text-success");
         $("#server_status_text").addClass("paroli-tts-extension-text-error");
         $("#server_status_text").text("Disconnected");
+        error_ts = performance.now();
+        cur_state = 0;
     }
 }
 
@@ -108,15 +124,15 @@ function reconnectWS(connect_fn) {
         connect_fn && connect_fn();
     });
     ws.addEventListener('message', function (event) {
-       
         if (typeof event.data == "string") {
             let msg = JSON.parse(event.data);
             if (msg["status"] == "ok")
                 return;
-            console.error("Paroli TTS Error: " + msg);
+            console.error("Paroli TTS Error -- Status: " + msg['status'] + ' | Message: '  + msg['message']);
             setServerState('error');
             return;
         }
+        if (cur_state !== 1) setServerState('good');
         var data = new Uint8Array(event.data);
         if (data.length == 0) return;
         player.feed(data);
@@ -124,8 +140,14 @@ function reconnectWS(connect_fn) {
 
     // Handle the promise outcome (connection success or failure)
     wsConnectedPromise.then(() => {
-        setServerState('good');
-        console.log("Paroli TTS websocket connection established successfully!");
+        var newTime = performance.now();
+        if ((newTime - error_ts) < 500) {
+            setServerState('error');
+        }
+        else {
+            setServerState('good');
+            console.log("Paroli TTS websocket connection established successfully!");
+        }
     }).catch(error => {
         setServerState('discon');
         console.error("Paroli TTS webSocket connection failed:", error);
@@ -137,8 +159,11 @@ function reconnectWS(connect_fn) {
 function runTTS(tts_text) {
     let data = JSON.stringify({
         text: tts_text,
-        speaker_id: 0,
-        audio_format: 'pcm'
+        speaker_id: null,
+        audio_format: 'pcm',
+        length_scale: parseFloat(extension_settings[extensionName].length_scale),
+        noise_scale: parseFloat(extension_settings[extensionName].noise_scale),
+        noise_w: parseFloat(extension_settings[extensionName].noise_width)
     });
 
     if (ws == null || ws.readyState != 1) {
