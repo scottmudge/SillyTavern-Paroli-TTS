@@ -5,7 +5,7 @@
             <b>Paroli TTS</b>
             <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
         </div>
-        <div class="inline-drawer-content">
+        <div class="inline-drawer-content" style="border: 1px solid #96a573;">
 
             <div class="paroli-tts-extension_block flex-container">
                 <label for="enable_tts_setting" style="display: flex; margin-left: 4%;">
@@ -27,7 +27,7 @@
 
             <div class="paroli-tts-extension_block flex-container">
                 <label for="volume_slider">Volume:</label>
-                <input type="range" id="volume_slider" min="0" max="1.0" step="0.01" value="1.0">
+                <input type="range" id="volume_slider" min="0" max="2.0" step="0.01" value="1.0">
                 <span id="volume_slider_value">1.0</span>
             </div>
 
@@ -49,7 +49,7 @@
                 <span id="noise_width_slider_value">1.0</span>
             </div>
 
-            <div class="paroli-tts-extension_block flex-container">
+            <div class="paroli-tts-extension_block flex-container" style="visibility: collapse;">
                 <label for="sample_rate_dropdown">Sample Rate:</label>
                 <select id="sample_rate_dropdown">
                     <option value="11025">11025</option>

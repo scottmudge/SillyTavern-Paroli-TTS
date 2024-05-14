@@ -19,10 +19,10 @@ var ws;
 var pcmplayer_opt = {
     encoding: '16bitInt',
     channels: 1,
-    sampleRate: 24000,
-    flushingTime: 100
+    sampleRate: 22050,
+    flushingTime: 250
 }
-var player;
+var player = new PCMPlayer(pcmplayer_opt);
 var error_ts = 0;
 var cur_state = 0; // 0 == error/disconnect, 1 == good
 
@@ -50,6 +50,7 @@ async function loadSettings() {
 
     $("#volume_slider").val(extension_settings[extensionName].volume);
     $("#volume_slider_value").text(extension_settings[extensionName].volume);
+    player.volume(parseFloat(extension_settings[extensionName].volume));
 
     $("#length_scale_slider").val(extension_settings[extensionName].length_scale);
     $("#length_scale_slider_value").text(extension_settings[extensionName].length_scale);
@@ -167,7 +168,6 @@ function runTTS(tts_text) {
     });
 
     if (ws == null || ws.readyState != 1) {
-        player = new PCMPlayer(pcmplayer_opt);
         reconnectWS(function () {
             ws.send(data);
         });
@@ -198,6 +198,7 @@ function onServerAddressInput(event) {
 
 function onVolumeSliderInput(event) {
     const value = $(event.target).val();
+    player.volume(parseFloat(value));
     extension_settings[extensionName].volume = value;
     $("#volume_slider_value").text(extension_settings[extensionName].volume);
     saveSettingsDebounced();
