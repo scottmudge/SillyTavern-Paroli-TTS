@@ -1,0 +1,12 @@
+{
+    "display_name": "Paroli TTS",
+    "loading_order": 9,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "author": "Scott Mudge",
+    "version": "0.0.1",
+    "homePage": "https://github.com/scottmudge/SillyTavern-Paroli-TTS",
+    "auto_update": true
+}

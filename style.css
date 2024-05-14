@@ -1,0 +1,180 @@
+/* Dark Green Theme */
+.paroli-tts-extension-settings {
+    background-color: #1c2b1f;
+    color: #d6e5d8;
+    padding: 0px;
+    border-radius: 8px;
+}
+
+.paroli-tts-extension-settings .inline-drawer-header {
+    background-color: #274e36;
+    color: #d6e5d8;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paroli-tts-extension-settings .inline-drawer-content {
+    background-color: #233329;
+    color: #d6e5d8;
+    padding: 0px;;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.paroli-tts-extension-settings .paroli-tts-extension_block {
+    margin-bottom: 15px;
+}
+
+/* Sliders */
+.paroli-tts-extension-settings input[type="range"] {
+    accent-color: #38a169;
+    background: transparent;
+    box-shadow: 0 0 5px rgba(56, 161, 105, 0.5);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.paroli-tts-extension-settings input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #38a169;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(56, 161, 105, 0.8);
+}
+
+/* Buttons */
+.paroli-tts-extension-settings input[type="submit"],
+.paroli-tts-extension-settings input[type="button"] {
+    background-color: #38a169;
+    color: #d6e5d8;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(56, 161, 105, 0.5);
+}
+
+.paroli-tts-extension-settings input[type="submit"]:hover,
+.paroli-tts-extension-settings input[type="button"]:hover {
+    background-color: #2f855e;
+}
+
+/* Checkbox */
+.paroli-tts-extension-settings input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #38a169;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+}
+
+.paroli-tts-extension-settings input[type="checkbox"]:checked {
+    background-color: #38a169;
+}
+
+.paroli-tts-extension-settings input[type="checkbox"]:checked::after {
+    content: "\2714";
+    font-size: 14px;
+    color: #d6e5d8;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Text Input */
+.paroli-tts-extension-settings input[type="text"] {
+    font-size: 12pt;
+    background-color: #233329;
+    color: #d6e5d8;
+    border: 1px solid #38a169;
+    border-radius: 4px;
+    padding: 5px 10px;
+    width: 25em; /* Approximately 100 characters wide */
+    box-sizing: border-box;
+}
+
+.paroli-tts-extension-settings input[type="text"]::placeholder {
+    color: #8a9b89;
+}
+
+.paroli-tts-extension-settings {
+    font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.paroli-tts-extension-text-success {
+    font-weight: bolder;
+    color: #b7eed0;
+}
+
+.paroli-tts-extension-text-error {
+    font-weight: normal;
+    color: #e76973;
+}
+
+.paroli-tts-extension-settings input[type="text"],
+.paroli-tts-extension-settings input[type="submit"],
+.paroli-tts-extension-settings input[type="button"],
+.paroli-tts-extension-settings select {
+    font-family: inherit;
+}
+
+.paroli-tts-extension-settings select {
+    background-color: #233329;
+    color: #d6e5d8;
+    border: 1px solid #38a169;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+/* Align sliders and dropdowns */
+.paroli-tts-extension-settings .inline-drawer-content {
+    background-color: #233329;
+    color: #d6e5d8;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.paroli-tts-extension-settings .paroli-tts-extension_block {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.paroli-tts-extension-settings .paroli-tts-extension_block label {
+    margin-right: 10px;
+    width: 150px; /* Adjust this value to increase or decrease the label width */
+    text-align: center;
+    vertical-align: middle;
+}
+
+.paroli-tts-extension-settings .paroli-tts-extension_block .slider-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.paroli-tts-extension-settings .paroli-tts-extension_block .slider-container input[type="range"],
+.paroli-tts-extension-settings .paroli-tts-extension_block .slider-container select {
+    flex-grow: 1;
+}
+
+.paroli-tts-extension-settings .paroli-tts-extension_block .slider-container span {
+    margin-left: 10px;
+}
